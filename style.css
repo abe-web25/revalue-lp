@@ -239,60 +239,58 @@ a {
 }
 
 /* =========================
-   STEP3（確定）
-   左：STEP3ラベル
-   右：本文（左列=タイトル/説明、右列=クーポン）
+   STEP3（STEP1/2と同じレイアウト）
 ========================= */
 
 .step-card--entry{
+  position: relative;
+  padding-bottom: 24px; /* 他のSTEPと同じ下部padding */
+  min-height: 160px; /* 高さをさらに確保 */
+}
+
+/* STEP3のヘッダー（STEP1/2と同じ） */
+.step-card--entry .step-header{
   display:flex;
+  align-items:center;
   gap:12px;
-  align-items:flex-start;
+  margin:0 0 20px; /* margin-bottomを増やす */
 }
 
-/* 左：STEP3 */
-.step-card--entry .step-left{
-  flex:0 0 auto;
-}
-
-/* 右：2列×2行（左=テキスト、右=クーポン） */
-.step-card--entry .step-body{
-  flex:1;
-  display:grid;
-  grid-template-columns: minmax(180px, 1fr) 108px; /* 左が本文、右がクーポン固定 */
-  grid-template-rows: auto auto;                   /* 上：タイトル、下：説明 */
-  column-gap:12px;
-  row-gap:6px;
-  align-items:start;
-}
-
-/* タイトル：1行固定 */
-.step-card--entry .step-title{
-  grid-column:1;
-  grid-row:1;
-  margin:0;
+.step-card--entry .step-number{
+  background:#B8986B;
+  color:#fff;
+  padding:6px 16px;
+  border-radius:15px;
+  font-weight:500;
+  font-size:12px;
   white-space:nowrap;
-  line-height:1.2;
 }
 
-/* 説明文：左下に固定 */
-.step-card--entry .step-desc{
-  grid-column:1;
-  grid-row:2;
+.step-card--entry .step-title{
+  font-family:'Noto Serif JP', serif;
+  font-size:16px;
+  font-weight:500;
+  color:#B8986B;
   margin:0;
-  line-height:1.6;
 }
 
-/* クーポン：右上に置き、見た目は中央寄り */
-.step-card--entry .coupon-mini{
-  grid-column:2;
-  grid-row:1;              /* ← 2行またぎにしない（ズレ防止） */
-  justify-self:end;
-  align-self:center;
+/* 説明文：STEP3の下に左揃え */
+.step-card--entry .step-desc{
+  font-size:14px;
+  color:#1C2430;
+  line-height:1.6;
+  margin:0;
+  margin-top: 55px; /* テキスト位置を揃える */
+  padding-right: 115px;
+}
 
-  position:relative;
+/* クーポン：右側に絶対配置 */
+.step-card--entry .coupon-mini{
+  position:absolute;
+  top: 50px;
+  right: 20px;
   width:108px;
-  padding:8px 6px 6px;
+  padding:18px 6px 14px; /* 上下のパディングを増やす */
   border:2px solid #E3C46B;
   border-radius:12px;
   background:linear-gradient(135deg,#FFF9E6,#FFFCF3);
@@ -320,7 +318,8 @@ a {
   color:#1C2430;
   font-weight:700;
   font-size:11px;
-  line-height:1.1;
+  line-height:1.3;
+  white-space:nowrap;
 }
 
 .step-card--entry .coupon-mini__num{
@@ -354,10 +353,8 @@ a {
   font-size:9px;
   color:#666;
   line-height:1.1;
+  white-space:nowrap;
 }
-
-
-
 /* ========================================
    Schedule Section
    ======================================== */
@@ -382,7 +379,19 @@ a {
     position: relative;
     z-index: 2;
     color: #1C2430;
-    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 20px;
+    /* さらに強力な白いもやもや */
+    text-shadow: 
+        0 0 30px rgba(255, 255, 255, 1),
+        0 0 60px rgba(255, 255, 255, 1),
+        0 0 90px rgba(255, 255, 255, 1),
+        0 0 120px rgba(255, 255, 255, 0.95),
+        0 0 150px rgba(255, 255, 255, 0.9),
+        0 0 180px rgba(255, 255, 255, 0.8);
 }
 
 .schedule-period-note {
@@ -392,7 +401,14 @@ a {
     color: #1C2430;
     font-size: 13px;
     margin-bottom: 20px;
-    text-shadow: 0 2px 6px rgba(255, 255, 255, 0.9);
+    /* さらに強力な白いもやもや */
+    text-shadow: 
+        0 0 25px rgba(255, 255, 255, 1),
+        0 0 50px rgba(255, 255, 255, 1),
+        0 0 75px rgba(255, 255, 255, 1),
+        0 0 100px rgba(255, 255, 255, 0.95),
+        0 0 125px rgba(255, 255, 255, 0.9),
+        0 0 150px rgba(255, 255, 255, 0.8);
 }
 
 .schedule-calendar {
@@ -407,7 +423,7 @@ a {
 
 .schedule-calendar iframe {
     width: 100%;
-    height: 400px;
+    height: 320px; /* 400px → 320px に縮小 */
     border: none;
 }
 
@@ -422,52 +438,81 @@ a {
 }
 
 /* ========================================
-   Trust Section
-   ======================================== */
-.trust {
-    background: #f9f9f9;
-    padding: 60px 20px;
+   Trust Section（古物商許可だけ2行でも揃える）
+======================================== */
+
+.trust{
+  background:#F2F5F8; /* ネイビーを10〜12%薄めた色 */
+  padding:60px 20px;
 }
+
 
 .trust-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
+/* カード */
 .trust-card {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 28px 20px 24px;
-    text-align: center;
-    min-height: 160px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 22px 18px 20px;
+  text-align: center;
+
+  height: 240px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* アイコン */
+.trust-icon-wrap {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .trust-icon {
-    width: 88px;
-    height: 88px;
-    margin: 0 auto 16px;
-    flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
+/* テキスト枠：高さを固定して全カード揃える */
+.trust-text {
+  width: 100%;
+  min-height: 62px; /* タイトル + 詳細2行分の“枠” */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* タイトル */
 .trust-title {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: #1C2430;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1C2430;
+  margin: 0 0 6px;
 }
 
+/* 詳細（2行想定） */
 .trust-detail {
-    font-size: 11px;
-    color: #666;
-    line-height: 1.5;
-    margin: 2px 0;
+  font-size: 11px;
+  color: #666;
+  line-height: 1.35;
+  margin: 2px 0 0;
 }
+
+
 
 /* ========================================
    FAQ Section
@@ -730,10 +775,3 @@ a {
     opacity: 0.6;
     text-align: center;
 }
-
-
-
-
-
-
-
