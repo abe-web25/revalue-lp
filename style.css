@@ -40,37 +40,38 @@ a {
 ======================================== */
 
 /* HERO本体 */
-.hero{
+.hero {
   position: relative;
-  min-height: 100svh;              /* スマホのアドレスバー変動に強い */
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
-
-  /* 左右は 0：各ブロック側で padding を持たせる（横はみ出し防止） */
   padding: 0;
+  overflow: hidden;
 
-  background: url("images/hero-bg.png") center / cover no-repeat;
-  overflow: hidden;                /* 念のため */
+  background-image: url("images/hero-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 65%;
 }
 
-/* 可読性用オーバーレイ（必要なければopacityを下げてOK） */
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: rgba(255,255,255,0.20);
-  pointer-events:none;
-  z-index:0;
+/* 可読性用オーバーレイ */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.20);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Hero内の要素はオーバーレイより前 */
-.hero > *{
+.hero > * {
   position: relative;
   z-index: 1;
 }
 
 /* バッジ */
-.hero-badge{
+.hero-badge {
   position: absolute;
   top: 16px;
   right: 16px;
@@ -81,31 +82,34 @@ a {
   border-radius: 999px;
   font-weight: 700;
   font-size: 14px;
-  box-shadow: 0 4px 15px rgba(227,196,107,0.30);
+  box-shadow: 0 4px 15px rgba(227, 196, 107, 0.30);
   z-index: 5;
 }
 
-/* テキスト領域（上を削って下を守る） */
-.hero-content{
+/* テキスト領域 */
+.hero-content {
   text-align: center;
   margin: 0 auto;
   width: min(680px, 100%);
-
-  /* 左右paddingはここで持つ */
   padding-left: 16px;
   padding-right: 16px;
 
-  /* ここが肝：端末が低いほど“上”を自動で削る */
-  padding-top: clamp(44px, 9svh, 96px);
-  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-  /* 下（CTA＋帯）を守るため、上は可変領域にする */
+  /* 位置微調整 */
+  transform: translateY(-60px);
+
+  padding-top: clamp(24px, 6svh, 72px);
+  padding-bottom: clamp(12px, 3svh, 32px);
+
   flex: 1 1 auto;
   min-height: 0;
 }
 
 /* タイトル */
-.hero-title{
+.hero-title {
   font-family: "Noto Serif JP", serif;
   font-weight: 700;
   line-height: 1.35;
@@ -113,58 +117,59 @@ a {
   color: #1C2430;
 
   text-shadow:
-    0 0 20px rgba(255,255,255,0.90),
-    0 0 40px rgba(255,255,255,0.80),
-    0 0 60px rgba(255,255,255,0.70),
-    0 0 80px rgba(255,255,255,0.50);
+    0 0 12px rgba(255, 255, 255, 0.95),
+    0 0 20px rgba(255, 255, 255, 0.90),
+    0 0 40px rgba(255, 255, 255, 0.80),
+    0 0 60px rgba(255, 255, 255, 0.70),
+    0 0 80px rgba(255, 255, 255, 0.50);
 }
 
-/* Hero内だけに限定 */
-.hero-title .num{
+.hero-title .num {
   font-size: clamp(32px, 8.5vw, 44px);
   font-weight: 700;
 }
-.hero-title .kanji{
+
+.hero-title .kanji {
   font-size: clamp(24px, 6.8vw, 34px);
   font-weight: 700;
 }
-.hero-title .hira{
+
+.hero-title .hira {
   font-size: clamp(16px, 4.8vw, 22px);
   font-weight: 700;
 }
 
-/* サブテキスト */
-.hero-text{
+/* サブテキスト（もやもや1段強化） */
+.hero-text {
   font-size: clamp(14px, 4.2vw, 16px);
   margin: 0 0 6px;
   color: #1C2430;
   text-shadow:
-    0 0 15px rgba(255,255,255,0.90),
-    0 0 30px rgba(255,255,255,0.80),
-    0 0 45px rgba(255,255,255,0.70),
-    0 0 60px rgba(255,255,255,0.50);
+    0 0 10px rgba(255, 255, 255, 0.95),
+    0 0 15px rgba(255, 255, 255, 0.90),
+    0 0 30px rgba(255, 255, 255, 0.80),
+    0 0 45px rgba(255, 255, 255, 0.70),
+    0 0 60px rgba(255, 255, 255, 0.50),
+    0 0 90px rgba(255, 255, 255, 0.35);
 }
 
-/* CTA：320pxでも崩れないように wrap 前提（下は縮ませない） */
-.hero-cta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-
+/* CTA */
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   padding: 0 16px 28px;
   margin-top: auto;
-
-  flex: 0 0 auto; /* 下を守る */
+  flex: 0 0 auto;
 }
 
-.hero-cta .btn{
-  flex: 1 1 150px;     /* 320pxでも2つが収まりやすい */
+.hero-cta .btn {
+  flex: 1 1 150px;
   min-width: 140px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 
   padding: 12px 10px;
   border-radius: 10px;
@@ -172,48 +177,50 @@ a {
   font-size: 12px;
   border: none;
   cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
   white-space: nowrap;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
 }
 
-.btn-primary{
+.btn-primary {
   background: linear-gradient(135deg, #E3C46B, #F4E4B0);
   color: #1C2430;
 }
-.btn-primary:hover{
+
+.btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(227,196,107,0.40);
+  box-shadow: 0 6px 20px rgba(227, 196, 107, 0.40);
 }
 
-.btn-line{
-  background:#fff;
-  color:#1C2430;
+.btn-line {
+  background: #fff;
+  color: #1C2430;
 }
-.btn-line:hover{
-  background:#f5f5f5;
+
+.btn-line:hover {
+  background: #f5f5f5;
   transform: translateY(-2px);
 }
 
-/* 下の帯：フルブリード（ネガティブマージン無し / 下は縮ませない） */
-.hero-now-cta{
-  background:#1C2430;
+/* 下の帯 */
+.hero-now-cta {
+  background: #1C2430;
   padding: 18px 16px;
-  text-align:center;
+  text-align: center;
   flex: 0 0 auto;
 }
 
-.hero-now-title{
-  font-family:"Noto Serif JP", serif;
+.hero-now-title {
+  font-family: "Noto Serif JP", serif;
   font-size: 18px;
   font-weight: 500;
-  color:#fff;
+  color: #fff;
   letter-spacing: 0.12em;
   margin: 0;
 }
 
-/* 低い端末だけ、さらに“上”を削る（Safari/Chrome差の保険） */
-@media (max-height: 720px){
-  .hero-content{
+/* 低い端末対策 */
+@media (max-height: 720px) {
+  .hero-content {
     padding-top: clamp(28px, 6svh, 72px);
   }
 }
@@ -221,44 +228,42 @@ a {
 /* =========================
    PC（768px〜）
 ========================= */
-@media (min-width: 768px){
+@media (min-width: 768px) {
 
-  .hero{
-    min-height: 720px; /* PCは見た目優先（不要なら外してOK） */
+  .hero {
+    min-height: 720px;
   }
 
-  .hero-badge{
+  .hero-badge {
     top: 22px;
     right: 22px;
     font-size: 15px;
     padding: 12px 26px;
   }
 
-  .hero-content{
+  .hero-content {
     width: min(920px, 100%);
     padding-left: 24px;
     padding-right: 24px;
-
-    /* PCは高さに余裕がある想定なので、上余白はやや大きめ */
     padding-top: clamp(96px, 10svh, 140px);
     padding-bottom: 16px;
   }
 
-  .hero-cta{
+  .hero-cta {
     width: min(920px, 100%);
     margin: 0 auto;
     padding: 0 24px 34px;
     justify-content: center;
   }
 
-  .hero-cta .btn{
+  .hero-cta .btn {
     flex: 0 0 auto;
     min-width: 260px;
     padding: 14px 14px;
     font-size: 13px;
   }
 
-  .hero-now-title{
+  .hero-now-title {
     font-size: 20px;
   }
 }
@@ -928,4 +933,3 @@ a {
         /* 2px → 1px で収まりやすく */
     }
 }
-
