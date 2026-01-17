@@ -9,6 +9,8 @@
 
 html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
@@ -31,130 +33,137 @@ a {
 }
 
 /* ========================================
-   Hero Section
-   ======================================== */
+   Hero Section（完成形 / SP・PC対応）
+   - 320px横はみ出し対策済み（ネガティブマージン廃止）
+   - 背景はcover、文字は可読性のため薄いオーバーレイ
+======================================== */
+
 .hero {
     position: relative;
-    min-height: 100vh;
-    background: url('images/hero-bg.png') center center/cover no-repeat;
+    min-height: 100svh;
+    /* スマホのアドレスバー変動に強い */
     display: flex;
     flex-direction: column;
-    padding: 60px 20px 0;
+
+    /* 左右は 0 にして、各ブロック側で padding を持たせる（横はみ出し防止） */
+    padding: 64px 0 0;
+
+    background: url("images/hero-bg.png") center / cover no-repeat;
+    overflow: hidden;
+    /* 念のため */
 }
 
+/* 可読性用オーバーレイ（必要なければopacityを下げてOK） */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.20);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* バッジ */
 .hero-badge {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 16px;
+    right: 16px;
+
     background: linear-gradient(135deg, #E3C46B, #F4E4B0);
     color: #1C2430;
-    padding: 10px 24px;
-    border-radius: 50px;
+    padding: 10px 22px;
+    border-radius: 999px;
     font-weight: 700;
     font-size: 14px;
-    box-shadow: 0 4px 15px rgba(227, 196, 107, 0.3);
-    z-index: 10;
+    box-shadow: 0 4px 15px rgba(227, 196, 107, 0.30);
+    z-index: 5;
 }
 
+/* テキスト領域 */
 .hero-content {
-    flex: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     text-align: center;
-    padding: 80px 0 20px;
+    padding: 88px 16px 18px;
+    /* 左右paddingはここで持つ */
+    margin: 0 auto;
+    width: min(680px, 100%);
 }
 
+/* タイトル */
 .hero-title {
-    font-family: 'Noto Serif JP', serif;
+    font-family: "Noto Serif JP", serif;
     font-weight: 700;
-    line-height: 1.4;
-    margin-bottom: 20px;
+    line-height: 1.35;
+    margin: 0 0 18px;
     color: #1C2430;
-    text-shadow: 
-        0 0 20px rgba(255, 255, 255, 0.9),
-        0 0 40px rgba(255, 255, 255, 0.8),
-        0 0 60px rgba(255, 255, 255, 0.7),
-        0 0 80px rgba(255, 255, 255, 0.5);
+
+    /* 白フチ寄りのにじみ（既存を踏襲） */
+    text-shadow:
+        0 0 20px rgba(255, 255, 255, 0.90),
+        0 0 40px rgba(255, 255, 255, 0.80),
+        0 0 60px rgba(255, 255, 255, 0.70),
+        0 0 80px rgba(255, 255, 255, 0.50);
 }
 
-.num {
-    font-size: 36px;
+/* ※ .num / .kanji / .hira は他でも使い得るので Hero内だけに限定 */
+.hero-title .num {
+    font-size: clamp(32px, 8.5vw, 44px);
     font-weight: 700;
 }
 
-.kanji {
-    font-size: 28px;
+.hero-title .kanji {
+    font-size: clamp(24px, 6.8vw, 34px);
     font-weight: 700;
 }
 
-.hira {
-    font-size: 18px;
+.hero-title .hira {
+    font-size: clamp(16px, 4.8vw, 22px);
     font-weight: 700;
 }
 
+/* サブテキスト */
 .hero-text {
-    font-size: 15px;
-    margin-bottom: 6px;
+    font-size: clamp(14px, 4.2vw, 16px);
+    margin: 0 0 6px;
     color: #1C2430;
-    text-shadow: 
-        0 0 15px rgba(255, 255, 255, 0.9),
-        0 0 30px rgba(255, 255, 255, 0.8),
-        0 0 45px rgba(255, 255, 255, 0.7),
-        0 0 60px rgba(255, 255, 255, 0.5);
+    text-shadow:
+        0 0 15px rgba(255, 255, 255, 0.90),
+        0 0 30px rgba(255, 255, 255, 0.80),
+        0 0 45px rgba(255, 255, 255, 0.70),
+        0 0 60px rgba(255, 255, 255, 0.50);
 }
 
+/* CTA：320pxでも崩れないように wrap 前提 */
 .hero-cta {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     gap: 10px;
+    padding: 0 16px 28px;
     margin-top: auto;
-    padding: 0 10px;
-    margin-bottom: 30px;
 }
 
-.hero-now-cta {
-    background: #1C2430;
-    padding: 18px 20px;
-    text-align: center;
-    margin: 0 -20px 0;
-}
-
-.hero-now-title {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 18px;
-    font-weight: 500;
-    color: #fff;
-    letter-spacing: 2px;
-    margin: 0;
-}
-
-.btn {
+.hero-cta .btn {
+    flex: 1 1 150px;
+    /* 320pxでも2つが収まりやすい */
+    min-width: 140px;
+    /* 折り返し基準 */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 6px;
+
     padding: 12px 10px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: 700;
     font-size: 12px;
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
     white-space: nowrap;
-}
-
-.btn-wide {
-    flex: 1.5;
-}
-
-.btn-narrow {
-    flex: 1;
-}
-
-.btn-large {
-    padding: 18px 40px;
-    font-size: 16px;
 }
 
 .btn-primary {
@@ -164,7 +173,7 @@ a {
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(227, 196, 107, 0.4);
+    box-shadow: 0 6px 20px rgba(227, 196, 107, 0.40);
 }
 
 .btn-line {
@@ -177,6 +186,65 @@ a {
     transform: translateY(-2px);
 }
 
+/* 下の帯：フルブリード（ネガティブマージン無し） */
+.hero-now-cta {
+    background: #1C2430;
+    padding: 18px 16px;
+    text-align: center;
+}
+
+.hero-now-title {
+    font-family: "Noto Serif JP", serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0.12em;
+    margin: 0;
+}
+
+/* =========================
+   PC（768px〜）
+========================= */
+@media (min-width: 768px) {
+
+    .hero {
+        padding-top: 84px;
+        min-height: 720px;
+        /* PCは見た目優先。必要なら外してOK */
+    }
+
+    .hero-badge {
+        top: 22px;
+        right: 22px;
+        font-size: 15px;
+        padding: 12px 26px;
+    }
+
+    .hero-content {
+        padding: 120px 24px 24px;
+        width: min(920px, 100%);
+    }
+
+    .hero-cta {
+        width: min(920px, 100%);
+        margin: 0 auto;
+        padding: 0 24px 34px;
+        justify-content: center;
+    }
+
+    .hero-cta .btn {
+        flex: 0 0 auto;
+        min-width: 260px;
+        padding: 14px 14px;
+        font-size: 13px;
+    }
+
+    .hero-now-title {
+        font-size: 20px;
+    }
+}
+
+
 /* ========================================
    Steps Section（確定・整理版）
    - 見出し：Noto Serif JP
@@ -184,177 +252,183 @@ a {
    - STEP3：step-card--entry（左：タイトル/説明｜右：クーポン）
 ======================================== */
 
-.steps{
-  background:#f5f5f5;
-  padding:60px 12px;
+.steps {
+    background: #f5f5f5;
+    padding: 60px 12px;
 }
 
-.section-title{
-  font-family:'Noto Serif JP', serif;
-  font-size:18px;
-  font-weight:600;
-  text-align:center;
-  margin:0 0 40px;
-  color:#1C2430;
+.section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 40px;
+    color: #1C2430;
 }
 
-.step-card{
-  background:#fff;
-  border-radius:15px;
-  padding:24px;
-  margin:0 0 16px;
+.step-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 24px;
+    margin: 0 0 16px;
 }
 
 /* STEP1/2 ヘッダー */
-.step-header{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin:0 0 12px;
+.step-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 12px;
 }
 
-.step-number{
-  background:#B8986B;
-  color:#fff;
-  padding:6px 16px;
-  border-radius:15px;
-  font-weight:500;
-  font-size:12px;
-  white-space:nowrap;
+.step-number {
+    background: #B8986B;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 15px;
+    font-weight: 500;
+    font-size: 12px;
+    white-space: nowrap;
 }
 
-.step-title{
-  font-family:'Noto Serif JP', serif;
-  font-size:16px;
-  font-weight:500;
-  color:#B8986B;
-  margin:0;
+.step-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #B8986B;
+    margin: 0;
 }
 
-.step-desc{
-  font-size:14px;
-  color:#1C2430;
-  line-height:1.6;
-  margin:0;
+.step-desc {
+    font-size: 14px;
+    color: #1C2430;
+    line-height: 1.6;
+    margin: 0;
 }
 
 /* =========================
    STEP3（STEP1/2と同じレイアウト）
 ========================= */
 
-.step-card--entry{
-  position: relative;
-  padding-bottom: 24px; /* 他のSTEPと同じ下部padding */
-  min-height: 160px; /* 高さをさらに確保 */
+.step-card--entry {
+    position: relative;
+    padding-bottom: 24px;
+    /* 他のSTEPと同じ下部padding */
+    min-height: 160px;
+    /* 高さをさらに確保 */
 }
 
 /* STEP3のヘッダー（STEP1/2と同じ） */
-.step-card--entry .step-header{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin:0 0 20px; /* margin-bottomを増やす */
+.step-card--entry .step-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 20px;
+    /* margin-bottomを増やす */
 }
 
-.step-card--entry .step-number{
-  background:#B8986B;
-  color:#fff;
-  padding:6px 16px;
-  border-radius:15px;
-  font-weight:500;
-  font-size:12px;
-  white-space:nowrap;
+.step-card--entry .step-number {
+    background: #B8986B;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 15px;
+    font-weight: 500;
+    font-size: 12px;
+    white-space: nowrap;
 }
 
-.step-card--entry .step-title{
-  font-family:'Noto Serif JP', serif;
-  font-size:16px;
-  font-weight:500;
-  color:#B8986B;
-  margin:0;
+.step-card--entry .step-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #B8986B;
+    margin: 0;
 }
 
 /* 説明文：STEP3の下に左揃え */
-.step-card--entry .step-desc{
-  font-size:14px;
-  color:#1C2430;
-  line-height:1.6;
-  margin:0;
-  margin-top: 55px; /* テキスト位置を揃える */
-  padding-right: 115px;
+.step-card--entry .step-desc {
+    font-size: 14px;
+    color: #1C2430;
+    line-height: 1.6;
+    margin: 0;
+    margin-top: 55px;
+    /* テキスト位置を揃える */
+    padding-right: 115px;
 }
 
 /* クーポン：右側に絶対配置 */
-.step-card--entry .coupon-mini{
-  position:absolute;
-  top: 50px;
-  right: 20px;
-  width:108px;
-  padding:18px 6px 14px; /* 上下のパディングを増やす */
-  border:2px solid #E3C46B;
-  border-radius:12px;
-  background:linear-gradient(135deg,#FFF9E6,#FFFCF3);
-  text-align:center;
+.step-card--entry .coupon-mini {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    width: 108px;
+    padding: 18px 6px 14px;
+    /* 上下のパディングを増やす */
+    border: 2px solid #E3C46B;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #FFF9E6, #FFFCF3);
+    text-align: center;
 }
 
 /* 上の「参加者全員」バッジ */
-.step-card--entry .coupon-mini__badge{
-  position:absolute;
-  top:-7px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#E3C46B;
-  color:#1C2430;
-  padding:2px 8px;
-  border-radius:999px;
-  font-size:9px;
-  font-weight:700;
-  white-space:nowrap;
+.step-card--entry .coupon-mini__badge {
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #E3C46B;
+    color: #1C2430;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
 /* 「買取 10%UP」 */
-.step-card--entry .coupon-mini__value{
-  display:block;
-  color:#1C2430;
-  font-weight:700;
-  font-size:11px;
-  line-height:1.3;
-  white-space:nowrap;
+.step-card--entry .coupon-mini__value {
+    display: block;
+    color: #1C2430;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 1.3;
+    white-space: nowrap;
 }
 
-.step-card--entry .coupon-mini__num{
-  font-size:20px;
-  font-weight:900;
-  color:#E3C46B;
-  margin:0 1px;
-  line-height:1;
+.step-card--entry .coupon-mini__num {
+    font-size: 20px;
+    font-weight: 900;
+    color: #E3C46B;
+    margin: 0 1px;
+    line-height: 1;
 }
 
-.step-card--entry .coupon-mini__pct{
-  font-size:13px;
-  font-weight:700;
-  color:#E3C46B;
+.step-card--entry .coupon-mini__pct {
+    font-size: 13px;
+    font-weight: 700;
+    color: #E3C46B;
 }
 
 /* 「クーポン」 */
-.step-card--entry .coupon-mini__label{
-  display:block;
-  margin-top:1px;
-  font-size:11px;
-  font-weight:700;
-  color:#1C2430;
-  line-height:1.1;
+.step-card--entry .coupon-mini__label {
+    display: block;
+    margin-top: 1px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #1C2430;
+    line-height: 1.1;
 }
 
 /* 有効期限 */
-.step-card--entry .coupon-mini__date{
-  display:block;
-  margin-top:2px;
-  font-size:9px;
-  color:#666;
-  line-height:1.1;
-  white-space:nowrap;
+.step-card--entry .coupon-mini__date {
+    display: block;
+    margin-top: 2px;
+    font-size: 9px;
+    color: #666;
+    line-height: 1.1;
+    white-space: nowrap;
 }
+
 /* ========================================
    Schedule Section
    ======================================== */
@@ -385,7 +459,7 @@ a {
     text-align: center;
     margin: 0 0 20px;
     /* さらに強力な白いもやもや */
-    text-shadow: 
+    text-shadow:
         0 0 30px rgba(255, 255, 255, 1),
         0 0 60px rgba(255, 255, 255, 1),
         0 0 90px rgba(255, 255, 255, 1),
@@ -402,7 +476,7 @@ a {
     font-size: 13px;
     margin-bottom: 20px;
     /* さらに強力な白いもやもや */
-    text-shadow: 
+    text-shadow:
         0 0 25px rgba(255, 255, 255, 1),
         0 0 50px rgba(255, 255, 255, 1),
         0 0 75px rgba(255, 255, 255, 1),
@@ -423,7 +497,8 @@ a {
 
 .schedule-calendar iframe {
     width: 100%;
-    height: 320px; /* 400px → 320px に縮小 */
+    height: 320px;
+    /* 400px → 320px に縮小 */
     border: none;
 }
 
@@ -441,75 +516,77 @@ a {
    Trust Section（古物商許可だけ2行でも揃える）
 ======================================== */
 
-.trust{
-  background:#F2F5F8; /* ネイビーを10〜12%薄めた色 */
-  padding:60px 20px;
+.trust {
+    background: #F2F5F8;
+    /* ネイビーを10〜12%薄めた色 */
+    padding: 60px 20px;
 }
 
 
 .trust-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }
 
 /* カード */
 .trust-card {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 14px;
-  padding: 22px 18px 20px;
-  text-align: center;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
+    padding: 22px 18px 20px;
+    text-align: center;
 
-  height: 240px;
+    height: 240px;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* アイコン */
 .trust-icon-wrap {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 10px;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .trust-icon {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 /* テキスト枠：高さを固定して全カード揃える */
 .trust-text {
-  width: 100%;
-  min-height: 62px; /* タイトル + 詳細2行分の“枠” */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+    width: 100%;
+    min-height: 62px;
+    /* タイトル + 詳細2行分の“枠” */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 /* タイトル */
 .trust-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #1C2430;
-  margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1C2430;
+    margin: 0 0 6px;
 }
 
 /* 詳細（2行想定） */
 .trust-detail {
-  font-size: 11px;
-  color: #666;
-  line-height: 1.35;
-  margin: 2px 0 0;
+    font-size: 11px;
+    color: #666;
+    line-height: 1.35;
+    margin: 2px 0 0;
 }
 
 
@@ -591,7 +668,7 @@ a {
     z-index: 1;
 }
 
-.store > * {
+.store>* {
     position: relative;
     z-index: 2;
 }
@@ -736,10 +813,15 @@ a {
 }
 
 .btn-final {
-    padding: 20px 60px;
-    font-size: 16px;
-    border-radius: 50px;
+    font-size: 20px;
+    /* いま設定したサイズ */
+    padding: 14px 46px;
+    /* 20/60 → 14/28（上下を小さく、左右も締める） */
+    border-radius: 999px;
+    line-height: 1;
+    /* 余計な縦の膨らみを抑える（任意） */
 }
+
 
 /* ========================================
    Footer
@@ -774,4 +856,74 @@ a {
     font-size: 11px;
     opacity: 0.6;
     text-align: center;
+}
+
+
+
+
+/* =========================
+   Trust（320px対策）
+   - SP極小幅では1カラムにして横はみ出しを止める
+========================= */
+@media (max-width: 360px) {
+
+    .trust {
+        padding: 48px 12px;
+        /* 20→12にして有効幅を確保 */
+    }
+
+    .trust-grid {
+        grid-template-columns: 1fr;
+        /* 2列→1列 */
+        gap: 14px;
+        /* 20→14 */
+    }
+
+    .trust-card {
+        height: auto;
+        /* 固定高を解除 */
+        padding: 18px 14px;
+        /* 18px→14pxで中身の幅を確保 */
+    }
+
+    .trust-icon-wrap {
+        width: 96px;
+        /* 120→96 */
+        height: 96px;
+        margin-bottom: 8px;
+    }
+
+    .trust-text {
+        min-height: 0;
+        /* 揃え用の固定を解除して詰まり防止 */
+    }
+}
+
+
+
+@media (max-width: 320px) {
+    .final-cta-title {
+        font-size: 24px;
+        /* 据え置き */
+        letter-spacing: 1px;
+        /* 2px → 1px で収まりやすく */
+    }
+}
+
+/* 低い端末（例: iPhone SE系）でFVがはみ出すのを防ぐ */
+@media (max-height: 720px){
+  .hero{
+    padding-top: 52px; /* 64 -> 52 */
+  }
+  .hero-content{
+    padding-top: 72px; /* 88 -> 72 */
+    padding-bottom: 12px; /* 18 -> 12 */
+  }
+  .hero-cta{
+    padding-bottom: 18px; /* 28 -> 18 */
+    gap: 8px;             /* 10 -> 8 */
+  }
+  .hero-now-cta{
+    padding: 14px 16px;   /* 18 -> 14 */
+  }
 }
