@@ -33,11 +33,8 @@ a {
 }
 
 /* ========================================
-   Hero Section（完成形 / SP・PC対応）
-   - 320px横はみ出し対策済み（ネガティブマージン無し）
-   - 背景はcover、文字は可読性のため薄いオーバーレイ
-   - 下（CTA＋ネイビー帯）を守り、上（背景側）を端末高に応じて削る
-======================================== */
+   Hero Section (Mobile First)
+   ======================================== */
 
 /* HERO本体 */
 .hero {
@@ -218,63 +215,9 @@ a {
   margin: 0;
 }
 
-/* 低い端末対策 */
-@media (max-height: 720px) {
-  .hero-content {
-    padding-top: clamp(28px, 6svh, 72px);
-  }
-}
-
-/* =========================
-   PC（768px〜）
-========================= */
-@media (min-width: 768px) {
-
-  .hero {
-    min-height: 720px;
-  }
-
-  .hero-badge {
-    top: 22px;
-    right: 22px;
-    font-size: 15px;
-    padding: 12px 26px;
-  }
-
-  .hero-content {
-    width: min(920px, 100%);
-    padding-left: 24px;
-    padding-right: 24px;
-    padding-top: clamp(96px, 10svh, 140px);
-    padding-bottom: 16px;
-  }
-
-  .hero-cta {
-    width: min(920px, 100%);
-    margin: 0 auto;
-    padding: 0 24px 34px;
-    justify-content: center;
-  }
-
-  .hero-cta .btn {
-    flex: 0 0 auto;
-    min-width: 260px;
-    padding: 14px 14px;
-    font-size: 13px;
-  }
-
-  .hero-now-title {
-    font-size: 20px;
-  }
-}
-
-
 /* ========================================
-   Steps Section（確定・整理版）
-   - 見出し：Noto Serif JP
-   - STEP1/2：step-header（従来）
-   - STEP3：step-card--entry（左：タイトル/説明｜右：クーポン）
-======================================== */
+   Steps Section (Mobile First)
+   ======================================== */
 
 .steps {
     background: #f5f5f5;
@@ -330,25 +273,18 @@ a {
     margin: 0;
 }
 
-/* =========================
-   STEP3（STEP1/2と同じレイアウト）
-========================= */
-
+/* STEP3 */
 .step-card--entry {
     position: relative;
     padding-bottom: 24px;
-    /* 他のSTEPと同じ下部padding */
     min-height: 160px;
-    /* 高さをさらに確保 */
 }
 
-/* STEP3のヘッダー（STEP1/2と同じ） */
 .step-card--entry .step-header {
     display: flex;
     align-items: center;
     gap: 12px;
     margin: 0 0 20px;
-    /* margin-bottomを増やす */
 }
 
 .step-card--entry .step-number {
@@ -369,32 +305,27 @@ a {
     margin: 0;
 }
 
-/* 説明文：STEP3の下に左揃え */
 .step-card--entry .step-desc {
     font-size: 14px;
     color: #1C2430;
     line-height: 1.6;
     margin: 0;
     margin-top: 55px;
-    /* テキスト位置を揃える */
     padding-right: 115px;
 }
 
-/* クーポン：右側に絶対配置 */
 .step-card--entry .coupon-mini {
     position: absolute;
     top: 50px;
     right: 20px;
     width: 108px;
     padding: 18px 6px 14px;
-    /* 上下のパディングを増やす */
     border: 2px solid #E3C46B;
     border-radius: 12px;
     background: linear-gradient(135deg, #FFF9E6, #FFFCF3);
     text-align: center;
 }
 
-/* 上の「参加者全員」バッジ */
 .step-card--entry .coupon-mini__badge {
     position: absolute;
     top: -7px;
@@ -409,7 +340,6 @@ a {
     white-space: nowrap;
 }
 
-/* 「買取 10%UP」 */
 .step-card--entry .coupon-mini__value {
     display: block;
     color: #1C2430;
@@ -428,25 +358,24 @@ a {
 }
 
 .step-card--entry .coupon-mini__pct {
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 900;
     color: #E3C46B;
+    line-height: 1;
 }
 
-/* 「クーポン」 */
 .step-card--entry .coupon-mini__label {
     display: block;
-    margin-top: 1px;
     font-size: 11px;
     font-weight: 700;
     color: #1C2430;
-    line-height: 1.1;
+    margin-top: 2px;
+    line-height: 1.2;
 }
 
-/* 有効期限 */
 .step-card--entry .coupon-mini__date {
     display: block;
-    margin-top: 2px;
+    margin-top: 6px;
     font-size: 9px;
     color: #666;
     line-height: 1.1;
@@ -454,11 +383,12 @@ a {
 }
 
 /* ========================================
-   Schedule Section
+   Schedule Section (Mobile First)
    ======================================== */
 .schedule {
-    background: url('images/hero-bg.png') center center/cover no-repeat;
-    padding: 60px 20px 40px;
+    background: url('images/hero-bg.png') center 80% no-repeat;
+    background-size: 130%;
+    padding: 40px 20px 30px;
     position: relative;
 }
 
@@ -469,7 +399,7 @@ a {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.35);
     z-index: 1;
 }
 
@@ -482,7 +412,6 @@ a {
     font-weight: 600;
     text-align: center;
     margin: 0 0 20px;
-    /* さらに強力な白いもやもや */
     text-shadow:
         0 0 30px rgba(255, 255, 255, 1),
         0 0 60px rgba(255, 255, 255, 1),
@@ -498,8 +427,7 @@ a {
     text-align: center;
     color: #1C2430;
     font-size: 13px;
-    margin-bottom: 20px;
-    /* さらに強力な白いもやもや */
+    margin-bottom: 38px;
     text-shadow:
         0 0 25px rgba(255, 255, 255, 1),
         0 0 50px rgba(255, 255, 255, 1),
@@ -522,7 +450,6 @@ a {
 .schedule-calendar iframe {
     width: 100%;
     height: 320px;
-    /* 400px → 320px に縮小 */
     border: none;
 }
 
@@ -537,15 +464,13 @@ a {
 }
 
 /* ========================================
-   Trust Section（古物商許可だけ2行でも揃える）
-======================================== */
+   Trust Section (Mobile First)
+   ======================================== */
 
 .trust {
     background: #F2F5F8;
-    /* ネイビーを10〜12%薄めた色 */
     padding: 60px 20px;
 }
-
 
 .trust-grid {
     display: grid;
@@ -553,27 +478,22 @@ a {
     gap: 20px;
 }
 
-/* カード */
 .trust-card {
     background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 14px;
-    padding: 22px 18px 20px;
+    border-radius: 15px;
+    padding: 18px;
     text-align: center;
-
-    height: 240px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    height: 220px;
 }
 
-/* アイコン */
 .trust-icon-wrap {
     width: 120px;
     height: 120px;
     margin-bottom: 10px;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -583,52 +503,46 @@ a {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    display: block;
 }
 
-/* テキスト枠：高さを固定して全カード揃える */
 .trust-text {
-    width: 100%;
-    min-height: 62px;
-    /* タイトル + 詳細2行分の“枠” */
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: flex-start;
+    align-items: center;
+    min-height: 54px;
 }
 
-/* タイトル */
 .trust-title {
+    font-family: 'Noto Serif JP', serif;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
     color: #1C2430;
-    margin: 0 0 6px;
+    margin-bottom: 4px;
+    text-align: center;
 }
 
-/* 詳細（2行想定） */
 .trust-detail {
     font-size: 11px;
     color: #666;
-    line-height: 1.35;
-    margin: 2px 0 0;
+    line-height: 1.5;
+    text-align: center;
 }
 
-
-
 /* ========================================
-   FAQ Section
+   FAQ Section (Mobile First)
    ======================================== */
+
 .faq {
-    background: #f9f9f9;
+    background: #fff;
     padding: 60px 20px;
 }
 
 .faq-item {
     background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
+    border-radius: 12px;
     margin-bottom: 12px;
-    overflow: hidden;
+    border: 1px solid #E5E5E5;
 }
 
 .faq-question {
@@ -641,22 +555,30 @@ a {
 }
 
 .faq-q {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: #B8986B;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 700;
-    color: #E3C46B;
     font-size: 14px;
-    min-width: 20px;
 }
 
 .faq-text {
     flex: 1;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     color: #1C2430;
 }
 
 .faq-icon {
-    font-size: 20px;
-    color: #ccc;
+    flex-shrink: 0;
+    font-size: 24px;
+    color: #B8986B;
     transition: transform 0.3s ease;
     font-weight: 300;
 }
@@ -673,7 +595,7 @@ a {
 }
 
 /* ========================================
-   Store Section
+   Store Section (Mobile First)
    ======================================== */
 .store {
     background: url('images/hero-bg.png') center center/cover no-repeat;
@@ -688,7 +610,7 @@ a {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.65);
     z-index: 1;
 }
 
@@ -819,7 +741,7 @@ a {
 }
 
 /* ========================================
-   Final CTA Section
+   Final CTA Section (Mobile First)
    ======================================== */
 .final-cta {
     background: #1C2430;
@@ -838,17 +760,13 @@ a {
 
 .btn-final {
     font-size: 20px;
-    /* いま設定したサイズ */
     padding: 14px 46px;
-    /* 20/60 → 14/28（上下を小さく、左右も締める） */
     border-radius: 999px;
     line-height: 1;
-    /* 余計な縦の膨らみを抑える（任意） */
 }
 
-
 /* ========================================
-   Footer
+   Footer (Mobile First)
    ======================================== */
 .footer {
     background: #1C2430;
@@ -882,54 +800,409 @@ a {
     text-align: center;
 }
 
-
-
-
-/* =========================
-   Trust（320px対策）
-   - SP極小幅では1カラムにして横はみ出しを止める
-========================= */
+/* ========================================
+   Small Screen Adjustments (360px以下)
+   ======================================== */
 @media (max-width: 360px) {
-
     .trust {
         padding: 48px 12px;
-        /* 20→12にして有効幅を確保 */
     }
 
     .trust-grid {
         grid-template-columns: 1fr;
-        /* 2列→1列 */
         gap: 14px;
-        /* 20→14 */
     }
 
     .trust-card {
         height: auto;
-        /* 固定高を解除 */
         padding: 18px 14px;
-        /* 18px→14pxで中身の幅を確保 */
     }
 
     .trust-icon-wrap {
         width: 96px;
-        /* 120→96 */
         height: 96px;
         margin-bottom: 8px;
     }
 
     .trust-text {
         min-height: 0;
-        /* 揃え用の固定を解除して詰まり防止 */
     }
 }
 
-
-
+/* ========================================
+   Very Small Screen Adjustments (320px以下)
+   ======================================== */
 @media (max-width: 320px) {
     .final-cta-title {
         font-size: 24px;
-        /* 据え置き */
         letter-spacing: 1px;
-        /* 2px → 1px で収まりやすく */
+    }
+}
+
+/* ========================================
+   Hero Section - Low Height Devices
+   ======================================== */
+@media (max-height: 720px) {
+  .hero-content {
+    padding-top: clamp(28px, 6svh, 72px);
+  }
+}
+
+/* ========================================
+   Tablet & Desktop (768px以上)
+   ======================================== */
+@media (min-width: 768px) {
+    
+    /* Hero Section - PC */
+    .hero {
+        min-height: 720px;
+    }
+
+    .hero-badge {
+        top: 22px;
+        right: 22px;
+        font-size: 15px;
+        padding: 12px 26px;
+    }
+
+    .hero-content {
+        width: min(920px, 100%);
+        padding-left: 24px;
+        padding-right: 24px;
+        padding-top: clamp(96px, 10svh, 140px);
+        padding-bottom: 16px;
+    }
+
+    .hero-cta {
+        width: min(920px, 100%);
+        margin: 0 auto;
+        padding: 0 24px 34px;
+        justify-content: center;
+    }
+
+    .hero-cta .btn {
+        flex: 0 0 auto;
+        min-width: 260px;
+        padding: 14px 14px;
+        font-size: 13px;
+    }
+
+    .hero-now-title {
+        font-size: 20px;
+    }
+    
+    /* Steps Section - PC */
+    .steps {
+        padding: 80px 40px;
+    }
+    
+    .section-title {
+        font-size: 24px;
+        margin-bottom: 60px;
+    }
+    
+    .step-card {
+        max-width: 800px;
+        margin: 0 auto 24px;
+        padding: 32px 40px;
+    }
+    
+    .step-header {
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .step-number {
+        font-size: 14px;
+        padding: 8px 20px;
+    }
+    
+    .step-title {
+        font-size: 20px;
+    }
+    
+    .step-desc {
+        font-size: 16px;
+    }
+    
+    /* STEP3 - Enhanced PC layout */
+    .step-card--entry {
+        min-height: 180px;
+    }
+    
+    .step-card--entry .coupon-mini {
+        width: 130px;
+        padding: 22px 8px 16px;
+        top: 55px;
+        right: 30px;
+    }
+    
+    .step-card--entry .coupon-mini__badge {
+        font-size: 10px;
+        padding: 3px 10px;
+    }
+    
+    .step-card--entry .coupon-mini__value {
+        font-size: 12px;
+    }
+    
+    .step-card--entry .coupon-mini__num {
+        font-size: 24px;
+    }
+    
+    .step-card--entry .coupon-mini__pct {
+        font-size: 15px;
+    }
+    
+    .step-card--entry .coupon-mini__label {
+        font-size: 12px;
+    }
+    
+    .step-card--entry .coupon-mini__date {
+        font-size: 10px;
+    }
+    
+    .step-card--entry .step-desc {
+        margin-top: 65px;
+        padding-right: 150px;
+    }
+    
+    /* Schedule Section - PC */
+    .schedule {
+        padding: 80px 40px;
+    }
+    
+    .schedule .section-title {
+        font-size: 24px;
+        margin-bottom: 24px;
+    }
+    
+    .schedule-period-note {
+        font-size: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .schedule-calendar {
+        max-width: 900px;
+        margin: 0 auto 24px;
+    }
+    
+    .schedule-calendar iframe {
+        height: 450px;
+    }
+    
+    /* Trust Section - PC */
+    .trust {
+        padding: 80px 40px;
+    }
+    
+    .trust-grid {
+        max-width: 1000px;
+        margin: 0 auto;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+    }
+    
+    .trust-card {
+        height: 280px;
+        padding: 28px 20px 24px;
+    }
+    
+    .trust-icon-wrap {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 14px;
+    }
+    
+    .trust-text {
+        min-height: 70px;
+    }
+    
+    .trust-title {
+        font-size: 15px;
+        margin-bottom: 8px;
+    }
+    
+    .trust-detail {
+        font-size: 12px;
+    }
+    
+    /* FAQ Section - PC */
+    .faq {
+        padding: 80px 40px;
+    }
+    
+    .faq-item {
+        max-width: 900px;
+        margin: 0 auto 16px;
+    }
+    
+    .faq-question {
+        padding: 22px 28px;
+    }
+    
+    .faq-q {
+        font-size: 16px;
+    }
+    
+    .faq-text {
+        font-size: 15px;
+    }
+    
+    .faq-answer {
+        padding: 0 28px 22px 64px;
+        font-size: 14px;
+    }
+    
+    /* Store Section - PC */
+    .store {
+        padding: 80px 40px;
+    }
+    
+    /* 2カラムレイアウト用のコンテナ */
+    .store-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        max-width: 1200px;
+        margin: 0 auto;
+        align-items: start;
+    }
+    
+    /* 右側：地図 */
+    .store-map-wrapper {
+        position: sticky;
+        top: 40px;
+    }
+    
+    .section-title-left {
+        font-size: 26px;
+        margin-bottom: 40px;
+        grid-column: 1 / -1;
+    }
+    
+    .store-brand {
+        margin-bottom: 32px;
+    }
+    
+    .store-name {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    
+    .store-name-sub {
+        font-size: 14px;
+    }
+    
+    .store-postal {
+        font-size: 15px;
+    }
+    
+    .store-address {
+        font-size: 15px;
+    }
+    
+    .store-contact-item {
+        font-size: 14px;
+    }
+    
+    .access-title,
+    .hours-title {
+        font-size: 18px;
+    }
+    
+    .access-text,
+    .hours-text {
+        font-size: 14px;
+    }
+    
+    .store-map {
+        height: 500px;
+        margin-bottom: 0;
+    }
+    
+    /* Final CTA - PC */
+    .final-cta {
+        padding: 80px 40px 40px;
+    }
+    
+    .final-cta-title {
+        font-size: 28px;
+        margin-bottom: 36px;
+    }
+    
+    .btn-final {
+        font-size: 22px;
+        padding: 16px 52px;
+    }
+    
+    /* Footer - PC */
+    .footer {
+        padding: 50px 40px;
+    }
+    
+    .footer-links-wrapper {
+        gap: 48px;
+        margin-bottom: 28px;
+    }
+    
+    .footer-link-main {
+        font-size: 15px;
+    }
+    
+    .footer-license {
+        font-size: 12px;
+    }
+}
+
+/* ========================================
+   Large Desktop (1200px以上)
+   ======================================== */
+@media (min-width: 1200px) {
+    
+    .steps {
+        padding: 100px 60px;
+    }
+    
+    .schedule {
+        padding: 100px 60px;
+    }
+    
+    .trust {
+        padding: 100px 60px;
+    }
+    
+    .trust-grid {
+        max-width: 1200px;
+        gap: 32px;
+    }
+    
+    .faq {
+        padding: 100px 60px;
+    }
+    
+    .faq-item {
+        max-width: 1000px;
+    }
+    
+    .store {
+        padding: 100px 60px;
+    }
+    
+    .store-container {
+        gap: 80px;
+        max-width: 1400px;
+    }
+    
+    .store-map {
+        height: 600px;
+    }
+    
+    .final-cta {
+        padding: 100px 60px 50px;
+    }
+    
+    .final-cta-title {
+        font-size: 32px;
     }
 }
